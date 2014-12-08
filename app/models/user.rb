@@ -45,7 +45,6 @@ class User
   has_many :messages, inverse_of: :author
 
   def self.find_or_create(openId)
-
     user = User.where(openId: openId).first || User.create(openId: openId)
   end
 end

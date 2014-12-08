@@ -3,7 +3,7 @@ class Message
   include Mongoid::Timestamps
 
   field :content,       type: String
-  field :createAt,      type: Time
+  #field :createAt,      type: Time
 
   field :msgId,         type: String
 
