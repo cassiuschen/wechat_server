@@ -10,10 +10,10 @@ class Wechat::BaseController < ApplicationController
   #  <MsgType><![CDATA[text]]></MsgType>
   #  <Content><![CDATA[你好]]></Content>
   #</xml>
-  def respond_message(content, msg)
+  def respond_message(author, sender, msg)
     message = {
-      ToUserName: content[:author],
-      FromUserName: content[:reciever],
+      ToUserName: author,
+      FromUserName: sender,
       CreateTime: Time.now.to_i,
       MsgType: 'text',
       Content: msg
