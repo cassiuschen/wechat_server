@@ -25,4 +25,10 @@ class Message
       "WRONG PARAMS"
     end
   end
+
+  def run_ruby
+    order = ""
+    (self.content.split - ["ruby"]).each {|o| order << o + " "}
+    `ruby -e '#{self.content.split}'`
+  end
 end

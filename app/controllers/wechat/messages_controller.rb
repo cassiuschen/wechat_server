@@ -16,7 +16,7 @@ class Wechat::MessagesController < Wechat::BaseController
     @serverName = rawData.xpath("//ToUserName").first.content
     case rawData.xpath("//MsgType").first.content
     when "text" then text_data rawData
-    #when "event" then event_data rawData
+    #when "ruby" then ruby_data rawData
     end
   end
   # 接收微信普通消息
@@ -35,6 +35,7 @@ class Wechat::MessagesController < Wechat::BaseController
     @message.msgId = rawData.xpath("//MsgId").first.content
     case @essage.content.split[0].downcase
     when 'set' then @res = @message.set_info
+    when 'ruby' then @res = @message.run_ruby
     end
   end
 end
