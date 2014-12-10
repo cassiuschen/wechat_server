@@ -19,6 +19,6 @@ class Wechat::BaseController < ApplicationController
       Content: msg
     }
 
-    render xml: message.to_xml
+    render xml: message
   end
 end

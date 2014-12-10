@@ -14,6 +14,8 @@ GEM
       rack-test (~> 0.6.2)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.1)
+    actionpack-xml_parser (1.0.1)
+      actionpack (>= 4.0.0.rc1)
     actionview (4.2.0.rc2)
       activesupport (= 4.2.0.rc2)
       builder (~> 3.1)
@@ -187,6 +189,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack-xml_parser
   byebug
   coffee-rails (~> 4.1.0)
   devise

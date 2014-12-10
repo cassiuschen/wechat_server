@@ -11,11 +11,10 @@ class Wechat::MessagesController < Wechat::BaseController
 
   private
   def modify_data
-    rawData = Nokogiri::XML params
-    @user = User.find_or_create(rawData.xpath("//FromUserName").first.content)
-    @serverName = rawData.xpath("//ToUserName").first.content
-    case rawData.xpath("//MsgType").first.content
-    when "text" then text_data rawData
+    @user = User.find_or_create(params[:FromUserName])
+    @serverName = params[:ToUserName]
+    case params[:MsgType]
+    when "text" then text_data params
     #when "ruby" then ruby_data rawData
     end
   end
@@ -31,8 +30,8 @@ class Wechat::MessagesController < Wechat::BaseController
   def text_data rawData
     @message = @user.messages.new
     @message.type = 'text'
-    @message.content = rawData.xpath("//Content").first.content
-    @message.msgId = rawData.xpath("//MsgId").first.content
+    @message.content = rawData[:Content]
+    @message.msgId = rawData[:MsgId]
     case @essage.content.split[0].downcase
     when 'set' then @res = @message.set_info
     when 'ruby' then @res = @message.run_ruby
