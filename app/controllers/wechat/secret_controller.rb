@@ -1,20 +1,36 @@
 require 'digest'
 class Wechat::SecretController < Wechat::BaseController
   def token
-    render json: { echostr: params[:echostr] } #if secret_data == params[:signature]
+    #if secret_data == params[:signature]
+      render text: params[:echostr]
+    # else
+    #   render text: "Promission Deny"
+    #   puts "========================== Debug ========================="
+    #   puts "Type   ".rjust(12," ") + "|" + "Origin".rjust(20," ") + "  |" + "Calc".rjust(20," ")
+    #   puts "TOKEN:  ".rjust(12," ") + "|" + Settings.wechat.token.rjust(20," ") + "  |" + @token.rjust(20," ")
+    #   puts "Timestamp:  ".rjust(12," ") + "|" + params[:timestamp].rjust(20," ") + "  |" + @timestamp.rjust(20," ")
+    #   puts "NONCE:  ".rjust(12," ") + "|" + params[:nonce].rjust(20," ")  + "  |" + @nonce.rjust(20," ")
+    #   puts "----------------------------------------------------------"
+    #   puts "signature:  ".rjust(12," ") + params[:signature]
+    #   puts "STR:        ".rjust(12, " ") + @str
+    #   puts "Digest:     ".rjust(12," ") + secret_data
+    # end
   end
 
   private
   def secret_data
-    token = ""
-    Settings.wechat.token.split("").sort.each{|i| token << i}
+    @token = ""
+    Settings.wechat.token.split("").sort.each{|i| @token << i}
 
-    timestamp = ""
-    params[:timestamp].split("").sort.each{|i| timestamp << i}
+    @timestamp = ""
+    params[:timestamp].split("").sort.each{|i| @timestamp << i}
 
-    nonce = ""
-    params[:nonce].split("").sort.each{|i| nonce << i}
+    @nonce = ""
+    params[:nonce].split("").sort.each{|i| @nonce << i}
 
-    Digest::SHA1.hexdigest token + timestamp + nonce
+    @str = ""
+    (Settings.wechat.token + params[:timestamp] + params[:nonce]).split("").sort.each{|i| @str << i}
+
+    Digest::SHA1.hexdigest @str
   end
 end
