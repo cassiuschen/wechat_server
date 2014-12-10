@@ -22,7 +22,7 @@ class Message
   end
 
   def set_info
-    self.check_black_list
+   # self.check_black_list
     user = self.author
     data = self.content.split
     if data[2]
@@ -35,7 +35,7 @@ class Message
   end
 
   def run_ruby
-    self.check_black_list
+    #self.check_black_list
     order = (self.content.split - ["ruby"]).join(" ")
     `ruby -e '#{order}'`
   end
