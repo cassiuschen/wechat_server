@@ -2,6 +2,8 @@ class Message
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  BLACK_LIST = [/loop/, /`/, /_id/, /openId/, /power/]
+
   field :content,       type: String
   #field :createAt,      type: Time
 
@@ -19,6 +21,8 @@ class Message
     self.author.save
   end
 
+  before_action :check_black_list, only: [:set_info, :run_ruby]
+
   def set_info
     user = self.author
     data = self.content.split
@@ -33,10 +37,23 @@ class Message
 
   def run_ruby
     order = (self.content.split - ["ruby"]).join(" ")
+
     `ruby -e '#{order}'`
   end
 
   def list_info
     "Your Info:\nName: #{self.author.name},\nEmail: #{self.author.email},\nSentMessage: #{self.author.msgCount}"
+  end
+
+  private
+  def check_black_list
+    #can_pass? = true
+    for bad in BLACK_LIST
+      if self.content.match bad
+        #can_pass? = false
+        "Has Something EVIL!!!"
+        break
+      end
+    end
   end
 end
