@@ -11,9 +11,9 @@ class Wechat::MessagesController < Wechat::BaseController
 
   private
   def modify_data
-    @user = User.find_or_create(params[:FromUserName])
-    @serverName = params[:ToUserName]
-    case params[:MsgType]
+    @user = User.find_or_create(params[:xml][:FromUserName])
+    @serverName = params[:xml][:ToUserName]
+    case params[:xml][:MsgType]
     when "text" then text_data params
     #when "ruby" then ruby_data rawData
     end
@@ -30,8 +30,8 @@ class Wechat::MessagesController < Wechat::BaseController
   def text_data rawData
     @message = @user.messages.new
     @message.type = 'text'
-    @message.content = rawData[:Content]
-    @message.msgId = rawData[:MsgId]
+    @message.content = rawData[:xml][:Content]
+    @message.msgId = rawData[:xml][:MsgId]
     case @essage.content.split[0].downcase
     when 'set' then @res = @message.set_info
     when 'ruby' then @res = @message.run_ruby

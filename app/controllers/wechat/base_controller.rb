@@ -1,6 +1,7 @@
 class Wechat::BaseController < ApplicationController
   protect_from_forgery with: :null_session
   helper_method :respond_message
+  before_action :check_signature
 
   # 被动返回消息
   #<xml>
@@ -20,5 +21,13 @@ class Wechat::BaseController < ApplicationController
     }
 
     render xml: message
+  end
+
+  private
+  def check_signature
+    @calc = Digest::SHA1.hexdigest [Settings.wechat.token, params[:timestamp], params[:nonce]].sort.join
+    unless @calc == params[:signature]
+      render text: "Promission Deny"
+    end
   end
 end
