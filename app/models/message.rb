@@ -14,6 +14,9 @@ class Message
   field :flag,          type: Boolean, default: false #是否加星标
 
   belongs_to :author, class_name: "User", inverse_of: :message
+  after_create do
+    self.author.msgCount += 1
+  end
 
   def set_info
     user = self.author

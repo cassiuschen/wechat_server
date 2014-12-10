@@ -13,14 +13,14 @@ class Wechat::BaseController < ApplicationController
   #</xml>
   def respond_message(author, sender, msg)
     message = {
-      ToUserName: author,
-      FromUserName: sender,
+      ToUserName: sender,
+      FromUserName: author,
       CreateTime: Time.now.to_i,
       MsgType: 'text',
       Content: msg
     }
 
-    render xml: message
+    message.to_xml(root: "xml", children: "item", skip_instruct: true, skip_types: true)
   end
 
   private
