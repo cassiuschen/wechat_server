@@ -16,6 +16,7 @@ class Message
   belongs_to :author, class_name: "User", inverse_of: :message
   after_create do
     self.author.msgCount += 1
+    self.author.save
   end
 
   def set_info
@@ -23,6 +24,7 @@ class Message
     data = self.content.split
     if data[2]
       user.method(data[1].downcase + "=").call data[2]
+      user.save
       "#{data[1]} has been set to #{data[2]}"
     else
       "WRONG PARAMS"
