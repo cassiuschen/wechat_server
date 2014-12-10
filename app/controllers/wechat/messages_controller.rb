@@ -32,6 +32,7 @@ class Wechat::MessagesController < Wechat::BaseController
       case @message.content.split[0].downcase
       when 'set' then @res = @message.set_info
       when 'ruby' then @res = @message.run_ruby
+      when 'info' then @res = @message.list_info
       end
     else
       @res = '抱歉，小紫的服务器好像出了一些问题，请重新发送消息~'

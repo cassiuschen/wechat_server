@@ -30,8 +30,11 @@ class Message
   end
 
   def run_ruby
-    order = ""
-    (self.content.split - ["ruby"]).each {|o| order << o + " "}
-    `ruby -e '#{self.content.split}'`
+    order = (self.content.split - ["ruby"]).join(" ")
+    `ruby -e '#{order}'`
+  end
+
+  def list_info
+    "Your Info:\nName: #{self.author.name},\nEmail: #{self.author.email},\nSentMessage: #{self.author.msgCount}"
   end
 end
