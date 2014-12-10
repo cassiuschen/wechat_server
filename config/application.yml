@@ -1,0 +1,14 @@
+defaults: &defaults
+  # Wechat Secret
+  wechat:
+    token: "cassiuschen1995"
+    AESKey: "836b741b04ab8cd4e2cb4c264bd24a3fef7ad5458b3"
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
