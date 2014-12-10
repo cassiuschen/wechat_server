@@ -3,7 +3,7 @@ class Wechat::MessagesController < Wechat::BaseController
 
   def create
     if @message.save!
-      respond_message @serverName, @user.openId , '你的消息小紫已收到并记录，稍后回复你~'
+      respond_message @serverName, @user.openId , @res || '你的消息小紫已收到并记录，稍后回复你~'
     else
       respond_message @serverName, @user.openId , '抱歉，小紫的服务器好像出了一些问题，请重新发送消息~'
     end
@@ -16,7 +16,7 @@ class Wechat::MessagesController < Wechat::BaseController
     @serverName = rawData.xpath("//ToUserName").first.content
     case rawData.xpath("//MsgType").first.content
     when "text" then text_data rawData
-    when "event" then event_data rawData
+    #when "event" then event_data rawData
     end
   end
   # 接收微信普通消息
@@ -33,5 +33,8 @@ class Wechat::MessagesController < Wechat::BaseController
     @message.type = 'text'
     @message.content = rawData.xpath("//Content").first.content
     @message.msgId = rawData.xpath("//MsgId").first.content
+    case @essage.content.split[0].downcase
+    when 'set' then @res = @message.set_info
+    end
   end
 end
