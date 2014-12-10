@@ -1,7 +1,7 @@
 require 'digest'
 class Wechat::SecretController < Wechat::BaseController
   def token
-    params[:echostr] if secret_data == params[:signature]
+    params[:echostr] #if secret_data == params[:signature]
   end
 
   private
