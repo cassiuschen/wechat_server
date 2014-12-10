@@ -1,6 +1,6 @@
 class Wechat::BaseController < ApplicationController
   protect_from_forgery with: :null_session
-  helper_methods :respond_message
+  helper_method :respond_message
 
   # 被动返回消息
   #<xml>
