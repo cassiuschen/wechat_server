@@ -2,11 +2,7 @@ class Wechat::MessagesController < Wechat::BaseController
   before_action :modify_data
 
   def create
-    if @message.save!
-      respond_message @serverName, @user.openId , @res || '你的消息小紫已收到并记录，稍后回复你~'
-    else
-      respond_message @serverName, @user.openId , '抱歉，小紫的服务器好像出了一些问题，请重新发送消息~'
-    end
+    respond_message @serverName, @user.openId , @res || '你的消息小紫已收到并记录，稍后回复你~'
   end
 
   private
@@ -32,9 +28,13 @@ class Wechat::MessagesController < Wechat::BaseController
     @message.type = 'text'
     @message.content = rawData[:xml][:Content]
     @message.msgId = rawData[:xml][:MsgId]
-    case @essage.content.split[0].downcase
-    when 'set' then @res = @message.set_info
-    when 'ruby' then @res = @message.run_ruby
+    if @message.save
+      case @essage.content.split[0].downcase
+      when 'set' then @res = @message.set_info
+      when 'ruby' then @res = @message.run_ruby
+      end
+    else
+      @res = '抱歉，小紫的服务器好像出了一些问题，请重新发送消息~'
     end
   end
 end
