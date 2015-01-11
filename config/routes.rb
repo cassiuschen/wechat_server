@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get 'jsToken' => "secret#jsSDK"
     get 'data' => 'secret#data'
     post 'data' => 'secret#addData'
+    get 'sign' => 'secret#sign'
   end
   #devise_for :users
   #devise_for :users

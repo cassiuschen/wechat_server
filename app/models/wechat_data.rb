@@ -1,8 +1,8 @@
 class WechatData
   include Mongoid::Document
-  field :pengyouquan, type: Integer
-  field :friend, type: Integer
-  field :qq, type: Integer
+  field :pengyouquan, type: Integer, default: 0
+  field :friend, type: Integer, default: 0
+  field :qq, type: Integer, default: 0
 
   def addData(params)
     @data = WechatData.all.last

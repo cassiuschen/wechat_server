@@ -16,4 +16,17 @@ class Wechat::SecretController < Wechat::BaseController
     Wechat.addData params
     render json: Wechat.all.last
   end
+
+  def sign
+    token = "jsapi_ticket=#{Token.get_token}"
+    noncestr = "noncestr=#{Token::WECHAT_APP_ID}"
+    @time = Time.now.to_i
+    timestamp = "timestamp=#{@time}"
+    url = "url=#{params[:url]}"
+
+    render json: {
+      timestamp: @time,
+      signature: Digest::SHA1.hexdigest [token, noncestr, timestamp, url].sort.join("&")
+    }
+  end
 end
