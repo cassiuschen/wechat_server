@@ -5,7 +5,7 @@ class Wechat::SecretController < Wechat::BaseController
   end
 
   def jsSDK
-    render text: Token.get_token
+    render text: Token.get_token.content
   end
 
   def data
@@ -18,7 +18,7 @@ class Wechat::SecretController < Wechat::BaseController
   end
 
   def sign
-    token = "jsapi_ticket=#{Token.get_token}"
+    token = "jsapi_ticket=#{Token.get_token.jsTicket}"
     noncestr = "noncestr=#{Token::WECHAT_APP_ID}"
     @time = Time.now.to_i
     timestamp = "timestamp=#{@time}"

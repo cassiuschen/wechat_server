@@ -4,6 +4,8 @@ class Token
   include Mongoid::Document
   field :content, type: String
   field :timeout, type: Time
+  field :ticket, type: String
+  field :ticket_timeout, type: Time
 
   WECHAT_TOKEN_API = 'https://api.weixin.qq.com/cgi-bin/token'
 
@@ -21,7 +23,7 @@ class Token
     else
       @token = Token.get_new_token
     end
-    @token.content
+    @token
   end
 
   def self.get_new_token
@@ -32,9 +34,26 @@ class Token
     Token.create_from_api @data
   end
 
+  def jsTicket
+    if Time.now >= self.ticket_timeout
+      self.generate_js_token
+    end
+    self.ticket
+  end
+
+  def generate_js_token
+    open "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=#{self.content}&type=jsapi" do |http|
+      @data = JSON.parse http.read.to_s
+    end
+    self.ticket = @data["token"]
+    self.ticket_timeout = Time.now + @data["expires_in"].to_i
+    self.save
+  end
+
   def self.create_from_api(data)
     Token.delete_all
     @token = Token.create(content: data["access_token"], timeout: Time.now + data["expires_in"].to_i)
+    @token.generate_js_token
     @token
   end
 
