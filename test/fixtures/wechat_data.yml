@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pengyouquan: 1
+  friend: 1
+  qq: 1
+
+two:
+  pengyouquan: 1
+  friend: 1
+  qq: 1

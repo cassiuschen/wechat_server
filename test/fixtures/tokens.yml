@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  timeout: 2015-01-11 11:31:42
+
+two:
+  content: MyString
+  timeout: 2015-01-11 11:31:42

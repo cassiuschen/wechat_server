@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   namespace :wechat do
     post '/' => "messages#create"
     get '/' => "secret#token"
+
+    get 'jsToken' => "secret#jsSDK"
+    get 'data' => 'secret#data'
+    post 'data' => 'secret#addData'
   end
   #devise_for :users
   #devise_for :users
