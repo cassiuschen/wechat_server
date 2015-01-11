@@ -26,7 +26,7 @@ class Wechat::SecretController < Wechat::BaseController
 
     render json: {
       timestamp: @time,
-      signature: Digest::SHA1.hexdigest [token, noncestr, timestamp, url].sort.join("&")
+      signature: "#{Digest::SHA1.hexdigest [token, noncestr, timestamp, url].sort.join("&")}"
     }
   end
 end
