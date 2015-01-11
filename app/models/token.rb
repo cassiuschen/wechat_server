@@ -45,7 +45,7 @@ class Token
     open "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=#{self.content}&type=jsapi" do |http|
       @data = JSON.parse http.read.to_s
     end
-    self.ticket = @data["token"]
+    self.ticket = @data["ticket"]
     self.ticket_timeout = Time.now + @data["expires_in"].to_i
     self.save
   end
